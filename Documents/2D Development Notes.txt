@@ -8,6 +8,11 @@ General Notes
 =============
 
 -------------------------------------------------------
+Projects:
+* UE5PlatformerProj is the initial test project and will not be actively used
+* MegaActionPlatformer is the actual project used (the 2D action platformer, created from a Blank project)
+
+-------------------------------------------------------
 World Partition / OFPA
 * OFPA = "One File Per Actor"
 * UE5.4 added a "World Partitioning" by default
