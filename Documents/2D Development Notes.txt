@@ -3,3 +3,59 @@
 
 =================================
 
+=============
+General Notes
+=============
+
+-------------------------------------------------------
+World Partition / OFPA
+* OFPA = "One File Per Actor"
+* UE5.4 added a "World Partitioning" by default
+* This creates a huge number of oddly named assets, meant for the purpose of multiple developers working on the same level.
+* This is not helpful for one person or a small team
+
+Disabling World Partition / OFPA:
+* In the current map, go to World Settings:
+  * World Partition Setup->World Partition: SET THIS TO NONE
+  * World->Advanced->Use External Actors:  TURN THIS OFF
+
+Confirm this is disabled:
+* Open World Partition window: Window->World Partition Editor
+* A message should display there: "World Partition is disabled for this map"
+
+
+Solution Reference:
+
+https://forums.unrealengine.com/t/disable-one-file-per-actor/658398/3
+Solution is in a comment:
+
+The tool in question didn’t exist for me, however I was able to disable External Actors by first disabling World Partition via the World Outliner, then just uncheck the External Actors checkbox from the World Outliner as well.
+
+NOTE:
+* The ThirdPersonMap starts with this enabled (that is, the default map for the Third Person Template).
+* If you just create a new map, it will be "normal" without ExternalActors and ExternalObjects enabled.
+
+
+-------------------------------------------------------
+Overlap Events for Components on an Actor:
+* Select component, e.g. collision Sphere
+  * Details->Events->OnComponentBeginOverlap, click + to create an Event
+  * Details->Collision->Collision Presets->OverlapAllDynamic
+
+-------------------------------------------------------
+Tips:
+* Alt + Drag an Actor in the scene to make a copy
+
+Paper2D / PaperZD:
+* PaperZD is built on top of Paper2D and adds more functionality, such as Anim Notifies
+
+
+
+===========================================
+Project Settings
+
+PaperZD Plugin: https://www.unrealengine.com/marketplace/en-US/product/paperzd
+
+
+===========================================
+
