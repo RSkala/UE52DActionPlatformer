@@ -23,6 +23,12 @@ Default Map:
   * Editor Startup Map
   * Game Default Map
 
+Selected Camera Preview in Viewport:
+* Editor Preferences -> Level Editor - Viewports
+  * Camera Preview Size (Default is 5.0). Reduce size to shrink in Viewport
+  * Preview Selected Cameras:
+    *If disabled the camera preview will not show up when a camera is selected.
+
 -------------------------------------------------------
 Asset Naming Conventions / Style Guides
 
@@ -247,6 +253,79 @@ Adding a Camera to the player character:
       * Also we set the Y (Pitch) angle to -15
   * Turn collision off the spring arm (in case an object goes between to block)
     * Spring Arm -> Details -> Camera Collision -> Do Collision Test: DISABLED
+
+===============================================
+22. Setting Up Inputs and Movement
+
+Enhanced Input System
+* Note that since UE5.1 and on, this is now the default input system
+  * Check in Project Settings -> Engine -> Input -> Default Classes
+    * Default Player Input Class:     EnhancedPlayerInput
+    * Default Input Component Class:  EnhancedInputComponent
+
+Classes Needed for Input:
+* Input Action
+* Input Mapping Context
+
+Content Browser -> Right Click -> Input -> Input Action / Input Mapping Context
+
+Input Action:
+* Value Type
+  * Bool: A button that is pressed or not impressed
+  * Axis 1D: float - A -1 or +1 value, (e.g. Left or Right)
+  * Axis 2D: Vector2D (e.g. Left, Right, Up, Down)
+  * Axis 3D: motion controller or smart phone
+
+This game moves only left and right, so we just want Axis1D for movement
+* IA_Jump, IA_Move
+
+Input Mapping Context:
+* Need to "Bind" the Input Actions to a button
+* When mapping to axis/movement, for an Axis1D the default direction is RIGHT
+* For an Axis1D, for LEFT, you must add a NEGATE Modifier
+
+To USE the Inputs:
+* Open the player Blueprint
+
+Add the Input Mapping Context:
+* Event Graph, On BeginPlay:
+  * Get Controller, Cast to PlayerController, from the PlayerController:
+    * Get Enhanced Input Local Player Subsystem -> Add Mapping Context
+      * Set the Input Mapping Context for your game (e.g. IMC_Action)
+
+Implement the Input Actions:
+* Event Graph, Right-click:
+  * Input -> Enhanced Action Events (this will populate with the Input Actions, e.g. IA_Jump)
+    * Triggered: For button continously pressed
+    * Started:   For button press down
+    * Canceled:  For button press release
+
+Note: We set IA_Jump -> Started to "Jump" which is a premade function on the Character class
+
+For Movement:
+* e.g. IA_Move -> Enhanced Input Action:
+* The Character class has a function "Add Movement Input"
+* Get the "Action Value" pin, which will be [-1, +1] (could be in between for joystick input)
+  * Set the Action Value to the Scale Value of "Add Movement Input"
+* IMPORTANT: We also need to set the "World Direction"
+  * For this platformer game, movement is only in the X, so we can set World Direction to:
+    (1.0, 0.0, 0.0)
+
+Player Facing Direction
+* Use Get Controller -> Set Control Rotation
+  * Drag back from "New Rotation" pin -> Utilities -> Select
+    * Use "Action Value", check if >= 0
+      * True : moving right, Make Rotator: 0.0, 0.0, 0.0 
+      * False: moving left, Make Rotator:  0.0, 180.0. 0.0
+        * This means, 180 degrees in the Yaw (rotation around Z-axis), so the asset is flipped
+
+With the above, the Camera ALSO flips around, which we DONT want:
+* In the BP_Player's Viewport, select the SpringArm:
+  * Details -> Transform
+    * Change Rotation to World (which changes it to "Absolute Rotation")
+      * This means it will always keep this rotation and ignore what its parent does
+    * Note: In the comments, you could also set Disable Inherit Yaw, but that may cause bugs whenthe player dies and/or detaches. It is best to use Absolute Rotation here.
+
 
 ===============================================
 
