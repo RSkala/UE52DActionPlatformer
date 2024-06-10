@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class MEGAACTIONPLATFORMER_API AActionCharBase : public APaperZDCharacter
 {
 	GENERATED_BODY()
