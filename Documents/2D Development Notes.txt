@@ -372,3 +372,32 @@ StateMachine:
   * Drag back into the other node to create a transition back (e.g. Idle->Run, Run->Idle)
 
 ===============================================
+4.24 Improving Character Movement
+
+Since this is a 2D game with 3D backgrounds, we need to ensure physics do not "push" Characters outside of the "lane":
+
+Plane Constraints:
+* Select the base class character -> Character Movement Component -> Planar Movement
+ * -> Constrain to Plane:  ENABLED
+ * -> Plane Constraint Normal:  Set Y to 1.0 (X and Z should stay at 0.0)
+      * We DONT want to move in the Y axis at all
+      * This constrains movement to the XZ plane
+      * This sets the Plane Constraint Normal to (0,1,0) and the Plane Constraint Origin to (0,0,0)
+
+Walking Off Edges
+* Character Movement Component -> Character Movement: Walking
+  * -> Use Flat Base for Floor Checks:  ENABLED
+    * This ignores the bottom "rounded" part of the capsule collision
+    * When walking near an edge, the character will "slide" down the edge because of the rounded base of the capsule collision. This setting fixes that.
+    * However, when dealing with slopes or stairs, this will be a problem and wont be addressed in this project.
+
+Jumping Settings:
+* Character Movement Component
+  * Character Movement (General Settings):
+    * Gravity Scale: Changed from 1 to 3
+  * Character Movement: Jumping / Falling:
+    * Jump Z Velocity: Changed from 420 cm/s to 900
+    * Air Control: Changed from 0.05 to 0.7
+      * Note: "1" would be the same amount of control we have while on the ground
+
+===============================================
