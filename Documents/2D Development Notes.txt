@@ -18,6 +18,51 @@ Editor Convenience Settings:
  * ->General->Appearance->User Interface->Asset Editor Open Location: Main Window
  * Level Editor - Viewports->Controls->Orbit Camera Around Selection:  ENABLED
 
+Default Map:
+* Project Settings->Maps & Modes->Default Maps
+  * Editor Startup Map
+  * Game Default Map
+
+-------------------------------------------------------
+Asset Naming Conventions / Style Guides
+
+* https://dev.epicgames.com/documentation/en-us/unreal-engine/recommended-asset-naming-conventions-in-unreal-engine-projects?application_version=5.4
+
+* https://www.unrealdirective.com/resources/asset-naming-conventions
+  * Contains 2D elements such as Sprite (SPR_)
+
+* https://github.com/Allar/ue5-style-guide
+
+-------------------------------------------------------
+2D Project Settings
+
+Anti-Aliasing
+* Project Settings->Engine->Rendering->Anti-Aliasing Method
+  * None: Best for 2D-only games
+  * FXAA: Best for 2D/3D hybrid games
+
+Motion Blur
+* Project Settings->Engine->Rendering->Default Settings->Motion Blur
+  * DISABLED: Best for all games
+
+Pixels Per Unit:
+* Project Settings->Editor->Paper2D - Import->New Asset Settings
+  * Default Pixels Per Unreal Unit: 1.0
+  * 0.25 is a good setting to make a 2D character a good size
+
+NOTES ON PPU:
+* 1 Unreal Unit = 1 cm (0.032ft)
+  * So, 32px @ 1PPU    => 32cm  (1.04ft)
+  *     32px @ 0.25PPU => 128cm (4.2ft)
+        * (this means a 32px character will be 4 times as large compared to 1ppu)
+* We want to change this value because the Character Movement Component expects the character to be of reasonable height (i.e. human-sized)
+
+A 32px character @ 1PPU is 32cm high (since 1 Unreal Unit = 1cm)
+32 cm ~ 1.04ft
+Changing to 0.25 means a 32px character would be 4 times as large compared to 1PPY
+A 32px character @ 0.25PPU is 128cm high
+128cm ~ 4.2ft
+
 -------------------------------------------------------
 World Partition / OFPA
 * OFPA = "One File Per Actor"
