@@ -13,6 +13,12 @@ Projects:
 * MegaActionPlatformer is the actual project used (the 2D action platformer, created from a Blank project)
 
 -------------------------------------------------------
+Editor Convenience Settings:
+* Editor Preferences
+ * ->General->Appearance->User Interface->Asset Editor Open Location: Main Window
+ * Level Editor - Viewports->Controls->Orbit Camera Around Selection:  ENABLED
+
+-------------------------------------------------------
 World Partition / OFPA
 * OFPA = "One File Per Actor"
 * UE5.4 added a "World Partitioning" by default
@@ -53,8 +59,6 @@ Tips:
 
 Paper2D / PaperZD:
 * PaperZD is built on top of Paper2D and adds more functionality, such as Anim Notifies
-
-
 
 ===========================================
 Project Settings
