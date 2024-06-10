@@ -62,6 +62,24 @@ A 32px character @ 1PPU is 32cm high (since 1 Unreal Unit = 1cm)
 Changing to 0.25 means a 32px character would be 4 times as large compared to 1PPY
 A 32px character @ 0.25PPU is 128cm high
 128cm ~ 4.2ft
+-------------------------------------------------------
+Texture Settings:
+
+* Right-click the texture in the Content Browser:
+  * Sprite Actions->Apply Paper2D Texture Settings
+
+* This changes various settings best for pixel art, e.g.
+  * Mip Gen Settings -> NoMipMaps
+  * Texture Group -> 2D Pixels (unfiltered)
+
+-------------------------------------------------------
+Extracting Sprites from Texture Sheet:
+
+* Right-click->Sprite Actions->Extract Sprites
+  * Note that sprites will often be different sizes, which is what we dont want, so:
+  * Sprite Extract Mode:
+    * Change from Auto to Grid
+    * You then need to set the Cell Width and Cell Height
 
 -------------------------------------------------------
 World Partition / OFPA
@@ -110,6 +128,63 @@ Project Settings
 
 PaperZD Plugin: https://www.unrealengine.com/marketplace/en-US/product/paperzd
 
+===========================================
+Sprites Settings:
+
+----------------------------------------------------------------
+Normal Process for Creating Sprite Sheets and Sprite Animations:
+
+Single Sprite Sheet:
+* Right-click->Sprite Actions->Apply Paper2D Texture Settings
+* Right-click->Extract Sprites
+* Sprite Extract Mode: Grid
+  * Cell Width:  240/6  = 40
+  * Cell Height: 532/14 = 38
+    * Note that you can actually type the division symbol / in the text box to get the value!
+* Click "Extract"
+  * If whitespace sprites are created, they can be deleted.
+
+
+Create an Animation from Sprites:
+* Select sprites from extracted sprites:
+  * Right-click -> Create Flipbook
+  * In Flipbook, can set Frames Per Second for the animation
+
+----------------------------------------------------------------
+Faster / Better Sprite Workflow:
+
+JSON Method
+* Note: This is the method used for the project
+* When using Aseprite, you will get a JSON file alongside the PNG
+* Drag ONLY the JSON file into the project
+  * This will automatically import the PNG that is next to it.
+  * If you drag BOTH, you will get various warnings (because it doesnt need the source PNG)
+    * NOTE: The error doesnt matter, you can still (and should) drag entire folders when needed
+* After dragging the JSON into the project, a file and two directories will be created:
+  * <same name as the json/png>: PaperSpriteSheet asset ("player" in this project)
+  * Frames:  Folder containing all the frames already cut out and named
+  * Textures: Original Texture with Paper2D texture settings applied
+    
+
+* You can then Right-click the sprite sheet and then Create Flipbooks
+  * This will create everything you already need and set up!
+  * Note that single-frame Flipbooks still and should be created!
+
+* Also note that we have to set the Frames Per Second values manually!
+  * For this project we will set all of Flipbooks' FPS values to 7.0.
+
+* To quickly edit multiple assets at the same time.
+  * Shift-click the assets -> right-click -> Asset Actions -> Edit Selection in Property Matrix
+
+---
+Enemies:
+* Added entire Enemies folder
+
+NOTE:
+* Bug in Packaged Game regarding Paper 2D Texture Settings.
+* Apparently for standard "Texture" assets, even though "Default (from Texture Group)" SHOULD be applied (and in fact it IS in the editor), this settings may not be applied in a Packaged game.
+* Apply a Textures in the Content Browser -> Right Click -> Asset Actions -> Edit Selection in Property Matrix to bulk edit
+* In Texture -> Filter -> Set all to Nearest (which I think is the same thing)
+
 
 ===========================================
-
