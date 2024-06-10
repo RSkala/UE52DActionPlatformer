@@ -328,5 +328,47 @@ With the above, the Camera ALSO flips around, which we DONT want:
 
 
 ===============================================
+4.23. Setting Up Animations with PaperZD
 
+3 Types of PaperZD assets that can be created:
+* Animation Sequence
+* Animation Source
+* PaperZD AnimBP
 
+Animation Source
+* Always create this first
+* Basically a "collection" of all your Flipbooks you want to use with a Character
+* You have to manually add each one, name, and set the Flipbook
+* This creates AnimationSequence assets for each in an AnimSequences folder
+
+Animation Sequence:
+* Created from Animation Source (as above)
+
+PaperZD AnimBP
+* Right-click->Paper ZD->PaperZD Anim BP
+* You have to select a parent Animation Source
+  * We generally give these an ABP_ prefix (e.g. ABP_Player)
+* In EventGraph, OnInit, you need to get the Owning Actor and set the OwningPlayer
+  * GetOwningPlyer->Cast to BP_Player -> Set OwningPlayer (create variable)
+* AnimGraph:
+  * Where we set up all our animations
+  * Output Animation node will determine the final state of our animation
+  * Drag off from the little man icon and under the Animation section:
+    * You can see all of your AnimSequence assets
+
+Set the PaperZD AnimBP in a PaperZDCharacter class:
+* Select the AnimationComponent -> Paper ZD -> Anim Instance Class
+  * Set this to your PaperZD AnimBP (e.g. ABP_Player)
+
+-------------------------
+PaperZD AnimBP:
+
+StateMachine:
+* In a PZDABP's's AnimGraph, Right-click->State Machine->Add New State Machine
+* You can have multiple StateMachines (e.g. Swimming, Flying, etc)
+* Drag off a node to create a Transition to a new animation state 
+  * A Transition looks like a white circle with two arrows pointing between the two nodes
+  * Double-click a transition node to add logic
+  * Drag back into the other node to create a transition back (e.g. Idle->Run, Run->Idle)
+
+===============================================
