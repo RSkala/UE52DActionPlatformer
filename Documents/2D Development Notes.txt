@@ -401,3 +401,21 @@ Jumping Settings:
       * Note: "1" would be the same amount of control we have while on the ground
 
 ===============================================
+4.25 Making the Iconic Mega Man Jump
+
+Short Hop/Long Hop
+* Changed Character Movment Component Values:
+  * Gravity Scale: 5.5
+  * Jump Z Velocity: 600
+
+Player Character: (BP_Player)
+* On the Character itself, not the movment component:
+  * Character -> Jump Max Hold Time
+    -> Changed from 0.0 to 0.4
+* Character Movement -> Air Control:
+  -> Changed from 0.7 to 1.0
+* Character Movement -> Falling Lateral Friction:
+  -> Changed from 0.0 to 50
+     * The higher the number, the quicker the player can turn around in the air
+
+===============================================
