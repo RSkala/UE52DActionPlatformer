@@ -225,7 +225,28 @@ Create a Child of the BP_ActionChar_BASE Blueprint:
 ===============================================
 21. Possessing the Player and Camera Setup
 
+Create a GameMode
+* Right click -> New Blueprint Class -> GameModeBase (or your own GameMode class)
 
+Use the player pawn:
+* Open the GameMode Blueprint -> Details -> Classes -> Default Pawn Class
+
+Use the Game Mode:
+* Edit -> Project Settings -> Project -> Maps & Modes -> Default Modes -> Default GameMode
+  * Also can override this in a map:
+    * World Settings -> Game Mode -> GameMode Override
+
+Adding a Camera to the player character:
+* In the Blueprint Viewport, select the Capsule Component (not the Sprite or anything else!)
+  * Click Add -> Spring Arm
+  * Select the new Spring Arm -> Add -> Camera
+  * Position the Spring Arm for 2D:
+    * Spring Arm -> Details
+      * Rotate around Z (Yaw) so it is facing so X-right and Z-up (-90 degree rotation)
+      * Camera -> Target Arm Length = 500
+      * Also we set the Y (Pitch) angle to -15
+  * Turn collision off the spring arm (in case an object goes between to block)
+    * Spring Arm -> Details -> Camera Collision -> Do Collision Test: DISABLED
 
 ===============================================
 
