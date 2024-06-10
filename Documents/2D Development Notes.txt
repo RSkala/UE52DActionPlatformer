@@ -187,4 +187,46 @@ NOTE:
 * In Texture -> Filter -> Set all to Nearest (which I think is the same thing)
 
 
-===========================================
+===============================================
+20. Inheritance and making the Player Blueprint
+
+* We are creating characters from PaperZDCharacter as the base class.
+* I created a C++ base class:
+  class MEGAACTIONPLATFORMER_API AActionCharBase : public APaperZDCharacter
+
+Setting the Character Sprite:
+* In the Blueprint Viewport, select the Sprite Component
+  * -> Sprite -> Source Flipbook
+
+Change the size of the collision capsule:
+* In the Blueprint Viewport, select the Capsule Component
+  * -> Shape -> Capsule Half Height
+
+To Cast Shadows (for 2D/3D hybrid)
+* Blueprint Viewport, select the Sprite Component
+  * -> Lighting -> Cast Shadow : Enabled
+* In the map, you will need to move and/or rotate the Directional Light (the sun)
+  * Change the rotation so you can see where the shadow lies
+
+To Receive Shadow (for 2D/3D hybrid)
+* This is a material setting
+* Blueprint Viewport, select Sprite Component
+  * -> Materials -> Default for Sprites is MaskedUnlitSpriteMaterial (i.e. for 2D only games)
+  * Change Material to MaskedLitSpriteMaterial
+    * If this material is not showing up:
+      * Click the cog icon and make sure "Show Plugin Content" is selected
+      * This material is part of the Paper2D plugin (not ZD)
+
+
+Create a Child of the BP_ActionChar_BASE Blueprint:
+* Select the Blueprint in the Content Browser -> Right click -> Create Child Blueprint Class
+  BP_Player
+
+===============================================
+21. Possessing the Player and Camera Setup
+
+
+
+===============================================
+
+
