@@ -418,4 +418,81 @@ Player Character: (BP_Player)
   -> Changed from 0.0 to 50
      * The higher the number, the quicker the player can turn around in the air
 
+========================================================================================
+5. Making the Player Projectile
+
 ===============================================
+5.26 Creating Projectiles
+
+ProjectileMovement:
+* Built into Unreal Engine
+* In Blueprint Viewport -> Add -> Projectile Movement Component
+  * This is a built-in Unreal component by Epic
+  * Allows projectiles to move forward, affect gravity, etc
+
+Collision
+* The ProjectileMovement needs a collision to work
+  * Add -> Sphere Collision (or Box Collision or whatever your projectile requires)
+  * IMPORTANT: The collision needs to be the Root
+    * Drag the Sphere Collision onto "DefaultSceneRoot" to make the collision the root
+    * The ProjectileMovement Component will use the Root as the collision
+      * It only accounts for the most upper level of collision
+
+Visual Element
+* Add -> Paper Flipbook
+  * Should be a child of the Sphere collision
+* Details -> Sprite -> Source Flipbook
+  * Since the Sphere will handle collision, we dont want the Flipbook to have any collision:
+    * Details -> Collision -> Collision Presets:
+      * Change BlockAllDynamic to NoCollision
+    * Here, you can decide if you want to cast shadows etc, but on this projectile we will leave it Unlit
+  * Change the Sphere size to match the FlipBook: Details->Shape->Sphere Radius
+    * Or from a game design standpoint, whatever "feels" good (e.g. a little larger)
+
+Gravity:
+* ProjectileMovement Component:
+  * Details -> Projectile -> Projectile Gravity Scale: 
+    * Change from 1.0 to 0.0
+  * This disables gravity on the projectile
+  * Note: It seems this overrides the Enable Gravity from the Sphere Collision:
+    * Details -> Physics -> Enable Gravity: This defaults to true
+
+Speed:
+* ProjectileMovement Component -> Projectile
+  * Initial Speed: Changed from 0 to 1000
+  * Max Speed: Changed from 0 to 1000
+  * Note: It seems the default is "FORWARD", which in Unreal is the X-axis
+    * Since we seem to make 2D games in Unreal on the XZ axis, the projectile will move RIGHT
+
+Testing Protip:
+* Can create a projectile in the scene, then Play dot menu-> Simulate
+
+
+Collision / Collision Channels
+* Document on Collision Filtering:
+  https://www.unrealengine.com/en-US/blog/collision-filtering
+
+Collision Responses:
+* Ignore: Pass through and no generated events
+* Overlap: Can pass through, but generates events
+* Block: Objects "Hit" each other, and can stop
+
+This project will use Overlap, as it is the simplest here
+
+For "Blocking" to work, both objects have to "Block" each other
+* This is set in the Collision settings
+* Our test wall is "BlockAllDynamic" 
+* So our projectile Sphere Collision, we set "BlockAllDynamic"
+  * After running the projectile gets "stuck" on the wall, which is what we want
+
+In the Sphere Collision's Details -> Events
+* On Component Hit: Event that is triggered if two blocking objects hit each other
+* On Component Begin Overlap: Triggers if two overlapping objects pass through each other
+* On Component End Overlap: Triggers if the two overlapping objects leave the overlap area
+
+We will use On Component Hit:
+* Click the + to add the event to the EventGraph
+
+
+===============================================
+
