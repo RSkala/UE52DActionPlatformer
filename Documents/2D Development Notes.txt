@@ -495,4 +495,33 @@ We will use On Component Hit:
 
 
 ===============================================
+4.27 Creating Flipbook VFX
 
+* Just using Actor base class (with C++ backing class)
+* Add PaperFlipBook
+  * NoCollision
+* Event: OnFinishedPlaying
+  * This is a standard Paper2D event
+* Need to set the effect to NOT looping
+  * OnFinishedPlaying will NEVER trigger on a looping FlipBook
+* Drag off the PaperFlipbook in the Components
+  * On Event BeginPlay, Set Looping = false
+  * OnFinishedPlaying, Destroy Actor (this will destroy the effect)
+    * TODO: This needs to have pooling, but outside the scope of this project
+
+Spawn the VFX from the Projectile when it hits the wall:
+* In the BP_Projectile_BASE
+* Event On Component Hit:
+  * Spawn Actor From Class,
+    * Spawn Transform:  Split:
+      * Spawn Transform Location: Get Actor Location (projectile position)
+      * Spawn Transofrm Rotation: Get Actor Rotation (projectile rotation)
+      * Spawn Transform Scale:  Keep at 1,1,1
+    * Collision Handling Override: Always Spawn, Ignore Collisions
+
+* Can also do:
+  * In the Projectiles, FUNCTIONS -> Override ->
+    * Destroy Event
+      * This is inherited from Actor class
+
+===============================================
